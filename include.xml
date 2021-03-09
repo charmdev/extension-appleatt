@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+
+	<section if="ios">
+		<ndll name="extension_appleatt" />
+		<dependency name="AppTrackingTransparency.framework" />
+	</section>
+
+</project>

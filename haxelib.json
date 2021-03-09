@@ -1,0 +1,10 @@
+{
+	"name": "extension-appleatt",
+	"url": "https://github.com/charmdev/extension-appleatt",
+	"license": "MIT",
+	"tags": ["ATT", "App Tracking Transparency", "iOS"],
+	"description": "Request user authorization to access app-related data for tracking the user or the device.",
+	"version": "1.0.0",
+	"contributors": ["charmdev"],
+	"releasenote": ""
+}
