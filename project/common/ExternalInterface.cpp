@@ -13,7 +13,7 @@
 #include <AppleATT.h>
 
 
-AutoGCRoot* _onResultCallback;
+static AutoGCRoot* _onResultHandle;
 
 static value appleatt_available() {
 	return alloc_bool(extension_appleatt::available());
@@ -39,16 +39,19 @@ static value appleatt_getAdvertisingIdentifier() {
 DEFINE_PRIM(appleatt_getAdvertisingIdentifier, 0);
 
 
-void extension_appleatt::onResultCallback() {
-	val_call0(_onResultCallback->get());
+extern "C" void onResultCallback()
+{
+	printf("onResultCallback\n");
+	val_call0(_onResultHandle->get());
 }
 
 
-static value extension_appleatt_setOnResultCallback(value func) {
-	_onResultCallback = new AutoGCRoot(func);
+static value appleatt_setOnResultHandle(value func) {
+	printf("appleatt_setOnResultHandle\n");
+	_onResultHandle = new AutoGCRoot(func);
 	return alloc_null();
 }
-DEFINE_PRIM(extension_appleatt_setOnResultCallback, 1);
+DEFINE_PRIM(appleatt_setOnResultHandle, 1);
 
 
 extern "C" void extension_appleatt_main() {

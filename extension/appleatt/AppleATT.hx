@@ -1,17 +1,18 @@
 package extension.appleatt;
 
-import extension.appleatt.AppleATTCFFI;
-import extension.util.task.*;
 
-class AppleATT extends TaskExecutor {
+class AppleATT {
 
 	private static var initialized:Bool = false;
 	private static var instance:AppleATT = null;
 
 	private static var __available:Void->Bool = function() { return false; };
+	private static var __setOnResultHandle:Dynamic->Void = function(cb:Dynamic) { };
 	private static var __getTrackingAuthorizationStatus:Void->Int = function() { return -1; };
 	private static var __requestTrackingAuthorization:Void->Void = function() { };
 	private static var __getAdvertisingIdentifier:Void->String = function() { return ""; };
+
+	private static var cb:Void->Void;
 	
 	public static function getInstance():AppleATT {
 		if (instance == null) instance = new AppleATT();
@@ -19,7 +20,7 @@ class AppleATT extends TaskExecutor {
 	}
 
 	private function new() {
-		super();
+		
 	}
 
 	public function init():Void {
@@ -33,6 +34,7 @@ class AppleATT extends TaskExecutor {
 
 		try {
 			__available = cpp.Lib.load("appleatt","appleatt_available", 0);
+			__setOnResultHandle = cpp.Lib.load("appleatt","appleatt_setOnResultHandle", 1);
 			__getTrackingAuthorizationStatus = cpp.Lib.load("appleatt","appleatt_getTrackingAuthorizationStatus", 0);
 			__requestTrackingAuthorization = cpp.Lib.load("appleatt","appleatt_requestTrackingAuthorization", 0);
 			__getAdvertisingIdentifier = cpp.Lib.load("appleatt","appleatt_getAdvertisingIdentifier", 0);
@@ -42,18 +44,15 @@ class AppleATT extends TaskExecutor {
 		}
 	}
 
-	public function requestTrackingAuthorization(_cb):Void {
+	public static var onResultEvent:Void->Void = null;
+
+	public function requestTrackingAuthorization(_cb:Void->Void):Void {
 
 		trace("AppleATT requestTrackingAuthorization");
 
-		var fOnResult = function() {
+		cb = _cb;
 
-			trace("AppleATT requestTrackingAuthorization cb");
-
-			addTask(new CallTask(_cb));
-		}
-
-		AppleATTCFFI.setOnResultCallback(fOnResult);
+		__setOnResultHandle(cb);
 
 		__requestTrackingAuthorization();
 	}

@@ -3,8 +3,7 @@
 #import <AppTrackingTransparency/AppTrackingTransparency.h>
 #import <AdSupport/ASIdentifierManager.h>
 
-
-extern "C" void sendResult(char* value);
+extern "C" void onResultCallback();
 
 
 namespace extension_appleatt {

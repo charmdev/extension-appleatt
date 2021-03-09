@@ -13,8 +13,6 @@ namespace extension_appleatt {
 	void requestTrackingAuthorization();
 	
 	const char* getAdvertisingIdentifier();
-
-	void onResultCallback();
 	
 }
 
