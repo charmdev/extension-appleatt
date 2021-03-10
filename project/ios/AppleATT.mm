@@ -60,35 +60,45 @@ namespace extension_appleatt {
 						// Tracking authorization dialog was shown
 						// and we are authorized
 						NSLog(@"requestTrackingAuthorization Authorized 3");
-						//onResultCallback("Authorized");
-						onResultCallback();
+						dispatch_async(dispatch_get_main_queue(), ^{
+							//onResultCallback("Authorized");
+							onResultCallback();
+						});
 						break;
 
 					case ATTrackingManagerAuthorizationStatusDenied:
 						// Tracking authorization dialog was
 						// shown and permission is denied
 						NSLog(@"requestTrackingAuthorization Denied 2");
-						//onResultCallback("Denied");
-						onResultCallback();
+						dispatch_async(dispatch_get_main_queue(), ^{
+							//onResultCallback("Denied");
+							onResultCallback();
+						});
 						break;
 
 					case ATTrackingManagerAuthorizationStatusNotDetermined:
 						// Tracking authorization dialog has not been shown
 						NSLog(@"requestTrackingAuthorization Not Determined 0");
-						//onResultCallback("NotDetermined");
-						onResultCallback();
+						dispatch_async(dispatch_get_main_queue(), ^{
+							//onResultCallback("NotDetermined");
+							onResultCallback();
+						});
 						break;
 
 					case ATTrackingManagerAuthorizationStatusRestricted:
 						NSLog(@"requestTrackingAuthorization Restricted 1");
-						//onResultCallback("Restricted");
-						onResultCallback();
+						dispatch_async(dispatch_get_main_queue(), ^{
+							//onResultCallback("Restricted");
+							onResultCallback();
+						});
 						break;
 
 					default:
 						NSLog(@"requestTrackingAuthorization Unknown");
-						//onResultCallback("Unknown");
-						onResultCallback();
+						dispatch_async(dispatch_get_main_queue(), ^{
+							//onResultCallback("Unknown");
+							onResultCallback();
+						});
 						break;
 				}
 

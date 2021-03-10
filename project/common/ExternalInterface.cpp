@@ -41,13 +41,11 @@ DEFINE_PRIM(appleatt_getAdvertisingIdentifier, 0);
 
 extern "C" void onResultCallback()
 {
-	printf("onResultCallback\n");
 	val_call0(_onResultHandle->get());
 }
 
 
 static value appleatt_setOnResultHandle(value func) {
-	printf("appleatt_setOnResultHandle\n");
 	_onResultHandle = new AutoGCRoot(func);
 	return alloc_null();
 }
