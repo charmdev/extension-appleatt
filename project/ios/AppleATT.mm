@@ -20,6 +20,13 @@ namespace extension_appleatt {
 		if (@available(iOS 14, *)) {
 			ATTrackingManagerAuthorizationStatus status = [ATTrackingManager trackingAuthorizationStatus];
 
+			BOOL isiOSAppOnMac = [NSProcessInfo processInfo].isiOSAppOnMac;
+			//NSLog(@"%@", isiOSAppOnMac ? @"iOS app on Mac" : @"not iOS app on Mac");
+
+			if (isiOSAppOnMac) {
+				return 3;
+			}
+
 			switch (status) {
 				case ATTrackingManagerAuthorizationStatusAuthorized:
 					NSLog(@"getTrackingAuthorizationStatus Authorized 3 ");
@@ -53,6 +60,17 @@ namespace extension_appleatt {
 		//__block NSInteger result = -1;
 		
 		if (@available(iOS 14, *)) {
+
+			BOOL isiOSAppOnMac = [NSProcessInfo processInfo].isiOSAppOnMac;
+			//NSLog(@"%@", isiOSAppOnMac ? @"iOS app on Mac" : @"not iOS app on Mac");
+
+			if (isiOSAppOnMac) {
+				dispatch_async(dispatch_get_main_queue(), ^{
+					onResultCallback();
+				});
+				return;
+			}
+
 			[ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
 
 				switch (status) {
