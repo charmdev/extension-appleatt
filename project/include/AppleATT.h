@@ -12,7 +12,7 @@ namespace extension_appleatt {
 
 	void requestTrackingAuthorization();
 	
-	const char* getAdvertisingIdentifier();
+	const char* stringTransformToLatin(const char* value);
 	
 }
 

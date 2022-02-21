@@ -8,6 +8,20 @@ extern "C" void onResultCallback();
 
 namespace extension_appleatt {
 
+	const char* stringTransformToLatin(const char *value) {
+		
+		NSString *sentence = [NSString stringWithUTF8String:value];
+		
+		NSMutableString *buffer = [sentence mutableCopy];
+		CFMutableStringRef bufferRef = (__bridge CFMutableStringRef)buffer;
+		CFStringTransform(bufferRef, NULL, kCFStringTransformToLatin, false);
+		CFStringTransform(bufferRef, NULL, kCFStringTransformStripDiacritics, false);
+		NSArray *arr = [buffer componentsSeparatedByString:@" "];
+		NSLog(@"%@", arr[0]);
+
+		return [arr[0] UTF8String];
+	}
+
 	bool available() {
 		if (@available(iOS 14, *))
 			return true;
@@ -123,11 +137,5 @@ namespace extension_appleatt {
 			}];
 		}
 	}
-
-	const char* getAdvertisingIdentifier() {
-
-		return "";
-	}
-	
 
 }

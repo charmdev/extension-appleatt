@@ -33,10 +33,10 @@ static void appleatt_requestTrackingAuthorization() {
 DEFINE_PRIM(appleatt_requestTrackingAuthorization, 0);
 
 
-static value appleatt_getAdvertisingIdentifier() {
-	return alloc_string(extension_appleatt::getAdvertisingIdentifier());
+static value appleatt_stringTransformToLatin(value val) {
+	return alloc_string(extension_appleatt::stringTransformToLatin(val_string(val)));
 }
-DEFINE_PRIM(appleatt_getAdvertisingIdentifier, 0);
+DEFINE_PRIM(appleatt_stringTransformToLatin, 1);
 
 
 extern "C" void onResultCallback()

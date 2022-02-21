@@ -10,7 +10,7 @@ class AppleATT {
 	private static var __setOnResultHandle:Dynamic->Void = function(cb:Dynamic) { };
 	private static var __getTrackingAuthorizationStatus:Void->Int = function() { return -1; };
 	private static var __requestTrackingAuthorization:Void->Void = function() { };
-	private static var __getAdvertisingIdentifier:Void->String = function() { return ""; };
+	private static var __stringTransformToLatin:String->String = function(value:String) { return ""; };
 
 	private static var cb:Void->Void;
 	
@@ -37,7 +37,7 @@ class AppleATT {
 			__setOnResultHandle = cpp.Lib.load("appleatt","appleatt_setOnResultHandle", 1);
 			__getTrackingAuthorizationStatus = cpp.Lib.load("appleatt","appleatt_getTrackingAuthorizationStatus", 0);
 			__requestTrackingAuthorization = cpp.Lib.load("appleatt","appleatt_requestTrackingAuthorization", 0);
-			__getAdvertisingIdentifier = cpp.Lib.load("appleatt","appleatt_getAdvertisingIdentifier", 0);
+			__stringTransformToLatin = cpp.Lib.load("appleatt","appleatt_stringTransformToLatin", 1);
 		}
 		catch(e:Dynamic) {
 			trace("AppleATT INIT Exception: " + e);
@@ -65,8 +65,8 @@ class AppleATT {
 		return __getTrackingAuthorizationStatus();
 	}
 
-	public function getAdvertisingIdentifier():String {
-		return __getAdvertisingIdentifier();
+	public function stringTransformToLatin(val:String):String {
+		return __stringTransformToLatin(val);
 	}
 
 }
