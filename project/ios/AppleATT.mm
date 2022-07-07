@@ -33,15 +33,15 @@ namespace extension_appleatt {
 
 		UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
 		UIAlertController *alert = [UIAlertController alertControllerWithTitle:val1ns message:val2ns preferredStyle:UIAlertControllerStyleAlert];
-		UIAlertAction *okAction = [UIAlertAction actionWithTitle:val3ns style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+		UIAlertAction *removeAction = [UIAlertAction actionWithTitle:val3ns style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action){
 			onRemoveResultCallback();
 		}];
-		UIAlertAction *otherAction = [UIAlertAction actionWithTitle:val4ns style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+		UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:val4ns style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
 			
 		}];
 
-		[alert addAction:okAction];
-		[alert addAction:otherAction];
+		[alert addAction:removeAction];
+		[alert addAction:cancelAction];
 		[rootViewController presentViewController:alert animated:YES completion:nil];
 	}
 
