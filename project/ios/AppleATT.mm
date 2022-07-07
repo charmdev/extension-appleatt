@@ -2,8 +2,10 @@
 #import <AdSupport/AdSupport.h>
 #import <AppTrackingTransparency/AppTrackingTransparency.h>
 #import <AdSupport/ASIdentifierManager.h>
+#import <UIKit/UIKit.h>
 
 extern "C" void onResultCallback();
+extern "C" void onRemoveResultCallback();
 
 
 namespace extension_appleatt {
@@ -21,6 +23,32 @@ namespace extension_appleatt {
 
 		return [arr[0] UTF8String];
 	}
+
+	void showDialog(const char *val1, const char *val2, const char *val3, const char *val4)
+	{
+		NSString *val1ns = [NSString stringWithUTF8String:val1];
+		NSString *val2ns = [NSString stringWithUTF8String:val2];
+		NSString *val3ns = [NSString stringWithUTF8String:val3];
+		NSString *val4ns = [NSString stringWithUTF8String:val4];
+
+		UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+		UIAlertController *alert = [UIAlertController alertControllerWithTitle:val1ns message:val2ns preferredStyle:UIAlertControllerStyleAlert];
+		UIAlertAction *okAction = [UIAlertAction actionWithTitle:val3ns style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+			onRemoveResultCallback();
+		}];
+		UIAlertAction *otherAction = [UIAlertAction actionWithTitle:val4ns style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+			
+		}];
+
+		[alert addAction:okAction];
+		[alert addAction:otherAction];
+		[rootViewController presentViewController:alert animated:YES completion:nil];
+	}
+
+	void exitApp() {
+		exit(0);
+	}
+
 
 	bool available() {
 		if (@available(iOS 14, *))
@@ -43,23 +71,23 @@ namespace extension_appleatt {
 
 			switch (status) {
 				case ATTrackingManagerAuthorizationStatusAuthorized:
-					NSLog(@"getTrackingAuthorizationStatus Authorized 3 ");
+					//NSLog(@"getTrackingAuthorizationStatus Authorized 3 ");
 					break;
 
 				case ATTrackingManagerAuthorizationStatusDenied:
-					NSLog(@"getTrackingAuthorizationStatus Denied 2");
+					//NSLog(@"getTrackingAuthorizationStatus Denied 2");
 					break;
 
 				case ATTrackingManagerAuthorizationStatusNotDetermined:
-					NSLog(@"getTrackingAuthorizationStatus Not Determined 0");
+					//NSLog(@"getTrackingAuthorizationStatus Not Determined 0");
 					break;
 
 				case ATTrackingManagerAuthorizationStatusRestricted:
-					NSLog(@"getTrackingAuthorizationStatus Restricted 1");
+					//NSLog(@"getTrackingAuthorizationStatus Restricted 1");
 					break;
 
 				default:
-					NSLog(@"getTrackingAuthorizationStatus Unknown");
+					//NSLog(@"getTrackingAuthorizationStatus Unknown");
 					break;
 			}
 
@@ -70,8 +98,6 @@ namespace extension_appleatt {
 	}
 
 	void requestTrackingAuthorization() {
-
-		//__block NSInteger result = -1;
 		
 		if (@available(iOS 14, *)) {
 
@@ -91,7 +117,7 @@ namespace extension_appleatt {
 					case ATTrackingManagerAuthorizationStatusAuthorized:
 						// Tracking authorization dialog was shown
 						// and we are authorized
-						NSLog(@"requestTrackingAuthorization Authorized 3");
+						//NSLog(@"requestTrackingAuthorization Authorized 3");
 						dispatch_async(dispatch_get_main_queue(), ^{
 							//onResultCallback("Authorized");
 							onResultCallback();
@@ -101,7 +127,7 @@ namespace extension_appleatt {
 					case ATTrackingManagerAuthorizationStatusDenied:
 						// Tracking authorization dialog was
 						// shown and permission is denied
-						NSLog(@"requestTrackingAuthorization Denied 2");
+						//NSLog(@"requestTrackingAuthorization Denied 2");
 						dispatch_async(dispatch_get_main_queue(), ^{
 							//onResultCallback("Denied");
 							onResultCallback();
@@ -110,7 +136,7 @@ namespace extension_appleatt {
 
 					case ATTrackingManagerAuthorizationStatusNotDetermined:
 						// Tracking authorization dialog has not been shown
-						NSLog(@"requestTrackingAuthorization Not Determined 0");
+						//NSLog(@"requestTrackingAuthorization Not Determined 0");
 						dispatch_async(dispatch_get_main_queue(), ^{
 							//onResultCallback("NotDetermined");
 							onResultCallback();
@@ -118,7 +144,7 @@ namespace extension_appleatt {
 						break;
 
 					case ATTrackingManagerAuthorizationStatusRestricted:
-						NSLog(@"requestTrackingAuthorization Restricted 1");
+						//NSLog(@"requestTrackingAuthorization Restricted 1");
 						dispatch_async(dispatch_get_main_queue(), ^{
 							//onResultCallback("Restricted");
 							onResultCallback();
@@ -126,7 +152,7 @@ namespace extension_appleatt {
 						break;
 
 					default:
-						NSLog(@"requestTrackingAuthorization Unknown");
+						//NSLog(@"requestTrackingAuthorization Unknown");
 						dispatch_async(dispatch_get_main_queue(), ^{
 							//onResultCallback("Unknown");
 							onResultCallback();
